@@ -83,7 +83,7 @@ try:
 except ImportError:
     # Fallback to default values
     youtube_url = 'https://youtu.be/kNcPTdiDwkI'
-    output_file = 'study_guide.md'
+    output_file = 'my_study_guide.md'
 
 print(f"🎯 Analyzing video: {youtube_url}")
 
@@ -228,6 +228,16 @@ try:
     print(f"   • Screenshots: {screenshot_count}")
     print(f"   • Transcript: {'✅' if transcript_exists else '❌'}")
     print(f"   • Processing time: {processing_time:.1f}s")
+    
+    # Show time savings
+    manual_time_estimate = video_info['duration'] * 2.5 + 60  # Watch + note-taking time
+    time_saved = manual_time_estimate - (processing_time / 60)
+    efficiency_gain = (time_saved / manual_time_estimate) * 100
+    
+    print(f"\n⚡ Time Savings:")
+    print(f"   • Manual process: ~{manual_time_estimate:.0f} minutes")
+    print(f"   • AI processing: {processing_time/60:.1f} minutes") 
+    print(f"   • Time saved: {time_saved:.0f} minutes ({efficiency_gain:.0f}%)")
     
 except Exception as e:
     print(f"❌ Error during processing: {e}")

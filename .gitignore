@@ -61,14 +61,17 @@ temp_video.*
 
 # Generated study guides (optional - you might want to keep some)
 *_study_guide.md
+my_study_guide.md
 study_guide.md
 final_study_guide.md
 advanced_study_guide.md
 fast_study_guide.md
-balanced_fast_study_guide.md
 ultra_fast_study_guide.md
 fixed_fast_study_guide.md
 robust_fast_study_guide.md
+
+# Poetry
+poetry.lock
 
 # Transcript files
 transcript.txt

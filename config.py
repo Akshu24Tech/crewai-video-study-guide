@@ -1,6 +1,6 @@
 """
-FAST Configuration for CrewAI Video Study Guide Generator
-Optimized for maximum speed while maintaining quality
+Configuration for CrewAI Video Study Guide Generator
+Optimized for speed while maintaining quality
 """
 
 # ================================
@@ -11,7 +11,7 @@ Optimized for maximum speed while maintaining quality
 VIDEO_URL = 'https://youtu.be/BM6aIZjyF8c'
 
 # Output file for the study guide
-OUTPUT_FILE = 'fast_study_guide.md'
+OUTPUT_FILE = 'my_study_guide.md'
 
 # Speed-optimized features (disable heavy features)
 ENABLE_YOUTUBE_SUMMARIZATION = True

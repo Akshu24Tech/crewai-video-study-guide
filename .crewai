@@ -1,0 +1,6 @@
+{
+  "project_name": "crewai-video-study-guide",
+  "project_description": "Fast, AI-powered study guide generation from YouTube videos using CrewAI and Google Gemini",
+  "crew_name": "VideoStudyGuideCrew",
+  "main_crew_file": "src/crew.py"
+}
