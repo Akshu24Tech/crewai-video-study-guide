@@ -1,5 +1,5 @@
 """
-ROBUST FAST CrewAI Video Study Guide Generator
+CrewAI Video Study Guide Generator
 Handles cleanup issues and provides reliable content extraction
 """
 
@@ -75,7 +75,7 @@ def get_video_info(youtube_url):
     
     return {'title': 'Unknown Video', 'description': '', 'duration': 30, 'uploader': 'Unknown'}
 
-# Configuration - Import from config.py if available
+# Configuration
 try:
     from config import VIDEO_URL, OUTPUT_FILE
     youtube_url = VIDEO_URL
@@ -120,7 +120,7 @@ print("✅ Tools ready!")
 robust_agent = Agent(
     role='Robust Video Content Analyzer',
     goal=f'Extract and analyze content from "{video_info["title"]}" and create a comprehensive study guide based on available data.',
-    backstory=f"""You are analyzing the YouTube video "{video_info['title']}" by {video_info['uploader']}. 
+    backstory=f"""You are analyzing the YouTube video "{video_info['title']}" by "{video_info['uploader']}". 
                  You must work with whatever data is available - screenshots, video metadata, or title information.
                  Even if some tools fail, you should create a meaningful study guide based on the video title 
                  and any available information. Focus on the educational topic indicated by the title.""",
@@ -179,7 +179,7 @@ robust_crew = Crew(
     **crew_settings
 )
 
-print(f"\n🚀 Starting ROBUST content analysis...")
+print(f"\n🚀 Starting content analysis...")
 print(f"🎯 Target: Create study guide for '{video_info['title']}'")
 print("⚡ Will work with available data and handle failures gracefully!")
 
@@ -194,7 +194,7 @@ try:
     })
     
     processing_time = time.time() - start_time
-    print(f"\n✅ ROBUST analysis completed in {processing_time:.1f} seconds!")
+    print(f"\n✅ Analysis completed in {processing_time:.1f} seconds!")
     print(f"📄 Study guide saved to: {output_file}")
     print(f"🎉 Processing time: {processing_time/60:.1f} minutes")
     
@@ -244,6 +244,6 @@ except Exception as e:
     print("💡 Check your API keys and internet connection")
 
 print("\n" + "="*60)
-print("🎉 ROBUST FAST ANALYSIS COMPLETE!")
+print("🎉 ANALYSIS COMPLETE!")
 print("✅ Handles cleanup issues and provides reliable content")
 print("="*60)

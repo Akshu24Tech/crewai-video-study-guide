@@ -8,7 +8,7 @@ Optimized for speed while maintaining quality
 # ================================
 
 # YouTube video URL to analyze
-VIDEO_URL = 'https://youtu.be/BM6aIZjyF8c'
+VIDEO_URL = 'https://youtu.be/BM6aIZjyF8c' # example
 
 # Output file for the study guide
 OUTPUT_FILE = 'my_study_guide.md'
