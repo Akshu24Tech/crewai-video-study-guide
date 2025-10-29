@@ -8,10 +8,10 @@ Optimized for maximum speed while maintaining quality
 # ================================
 
 # YouTube video URL to analyze
-VIDEO_URL = 'https://youtu.be/BM6aIZjyF8c'
+VIDEO_URL = 'https://youtu.be/BM6aIZjyF8c' # example
 
 # Output file for the study guide
-OUTPUT_FILE = 'fast_study_guide.md'
+OUTPUT_FILE = 'my_study_guide.md'
 
 # Speed-optimized features (disable heavy features)
 ENABLE_YOUTUBE_SUMMARIZATION = True
