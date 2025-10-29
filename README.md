@@ -64,8 +64,6 @@ python main_crew.py
 | Version | Speed | Quality | Best For |
 |---------|-------|---------|----------|
 | **Main Script** ⭐ | 1-3 min | Excellent | **Recommended** |
-| Balanced Fast | 2-4 min | Excellent | Quality focus |
-| Advanced | 5-10 min | Maximum | Research projects |
 
 ## 🎬 Example Output
 
@@ -111,8 +109,7 @@ MAX_EXECUTION_TIME = 180
 
 ```
 crewai-video-study-guide/
-├── main_crew.py                # 🌟 Main script (recommended)
-├── main_crew_balanced_fast.py  # Alternative balanced version
+├── main_crew.py                # 🌟 Main script
 ├── config.py                   # Configuration settings
 ├── video_tools.py              # Video processing functions
 ├── gemini_tools.py             # Gemini AI integration
