@@ -59,7 +59,7 @@ pip install yt-dlp
 python main_crew.py
 ```
 
-## 📊 Performance Comparison
+## 📊 Performance
 
 | Version | Speed | Quality | Best For |
 |---------|-------|---------|----------|
@@ -195,9 +195,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 🐛 **Issues**: [GitHub Issues](https://github.com/yourusername/crewai-video-study-guide/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/crewai-video-study-guide/discussions)
-- 📧 **Email**: your.email@example.com
+- 🐛 **Issues**: [GitHub Issues](https://github.com/Akshu24Tech/crewai-video-study-guide/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/Akshu24Tech/crewai-video-study-guide/discussions)
+- 📧 **Email**: akshug2004@gmail.com
 
 ---
 
