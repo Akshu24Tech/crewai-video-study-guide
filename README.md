@@ -72,7 +72,11 @@ pip install yt-dlp
 
 ### 5. Run the Generator
 ```bash
-python main_crew.py
+python -m src.main
+```
+Or using Poetry:
+```bash
+poetry run python -m src.main
 ```
 
 ## 📊 Performance Comparison
@@ -125,13 +129,14 @@ MAX_EXECUTION_TIME = 180
 
 ```
 crewai-video-study-guide/
-├── main_crew.py                # 🌟 Main script
-├── config.py                   # Configuration settings
-├── video_tools.py              # Video processing functions
-├── gemini_tools.py             # Gemini AI integration
-
-├── requirements.txt            # Dependencies
-├── .env.example               # Environment variables template
+├── src/                        # 🌟 Main package
+│   ├── crew.py                 # CrewAI workflow
+│   ├── config.py               # Configuration
+│   ├── tools.py                # Tool imports
+│   ├── video_tools.py          # Video processing
+│   └── gemini_tools.py         # AI integration
+├── pyproject.toml              # Dependencies & config
+├── .env.example               # Environment template
 └── README.md                  # This file
 ```
 
@@ -139,14 +144,14 @@ crewai-video-study-guide/
 
 ### Custom Video Analysis
 ```python
-from main_crew import robust_crew
+from src.crew import VideoStudyGuideCrew
 
 # Analyze specific video
-result = robust_crew.kickoff(inputs={
-    'youtube_url': 'https://youtu.be/VIDEO_ID',
-    'video_title': 'Custom Title',
-    'output_file': 'my_custom_guide.md'
-})
+crew = VideoStudyGuideCrew()
+result = crew.run(
+    youtube_url='https://youtu.be/VIDEO_ID',
+    output_file='my_custom_guide.md'
+)
 ```
 
 ### Batch Processing
