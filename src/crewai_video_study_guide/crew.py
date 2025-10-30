@@ -1,104 +1,73 @@
 from crewai import Agent, Crew, Process, Task
+from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import VisionTool, FileReadTool
 from .tools.video_tools import extract_video_data
 
-class CrewaiVideoStudyGuideCrew:
-    """CrewAI Video Study Guide Crew - Simple Implementation"""
-    
-    def __init__(self):
-        pass
-    
-    def crew(self):
-        """Create and return the crew"""
-        
-        # Create agents
-        video_engineer = Agent(
-            role='Video Content Engineer',
-            goal='Download the video, extract screenshots at key intervals, and retrieve the full transcript.',
-            backstory='''You are an expert in computer vision and media processing. Your job is to 
-                         use your custom tools to cleanly break down the video data for the analysis agent.''',
+@CrewBase
+class CrewaiVideoStudyGuideCrew():
+    """CrewaiVideoStudyGuide crew"""
+
+    @agent
+    def video_engineer(self) -> Agent:
+        return Agent(
+            config=self.agents_config['video_engineer'],
             tools=[extract_video_data],
             verbose=True,
             allow_delegation=False
         )
-        
-        content_analyzer = Agent(
-            role='Speed-Optimized Content Analyzer',
-            goal='Rapidly analyze screenshots in batches and extract key visual information efficiently.',
-            backstory='''You are an efficient visual analyst optimized for speed. You quickly identify important 
-                         details, read text in images, and understand visual context. You work in batches to 
-                         maximize processing speed while maintaining quality analysis.''',
+
+    @agent
+    def content_analyzer(self) -> Agent:
+        return Agent(
+            config=self.agents_config['content_analyzer'],
             tools=[VisionTool()],
             verbose=False,
             allow_delegation=False,
             max_iter=3,
             max_execution_time=300
         )
-        
-        note_synthesizer = Agent(
-            role='Speed-Optimized Note Synthesizer',
-            goal='Rapidly create comprehensive study notes by efficiently combining visual analysis with transcript data.',
-            backstory='''You are a highly efficient educational content creator optimized for speed and quality. 
-                         You quickly synthesize information from multiple sources to create well-structured study 
-                         guides. You work fast while maintaining educational value and clear organization.''',
+
+    @agent
+    def note_synthesizer(self) -> Agent:
+        return Agent(
+            config=self.agents_config['note_synthesizer'],
             tools=[FileReadTool()],
             verbose=False,
             allow_delegation=False,
             max_iter=2,
             max_execution_time=300
         )
-        
-        # Create tasks
-        extract_task = Task(
-            description=(
-                "Use the 'Video Screenshot and Transcript Extractor' tool on the URL {youtube_url}. "
-                "The tool will automatically determine the optimal screenshot interval based on the video length. "
-                "Ensure the output clearly lists the file paths of all saved screenshots and the transcript file."
-            ),
-            expected_output='A clean summary listing the file paths and timestamps for all extracted screenshots and the transcript path.',
-            agent=video_engineer
+
+    @task
+    def extract_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['extract_task'],
+            agent=self.video_engineer()
         )
-        
-        analysis_task = Task(
-            description=(
-                "SPEED-OPTIMIZED ANALYSIS: Rapidly analyze all screenshots from the Video Content Engineer. "
-                "Work efficiently through each screenshot file: "
-                "1. Quickly identify key visual elements, text, and educational content using VisionTool. "
-                "2. Extract main concepts and themes without excessive detail. "
-                "3. Note important text, titles, or data visible in images. "
-                "4. Focus on educational value and learning objectives. "
-                "5. Work through screenshots systematically and efficiently. "
-                "Prioritize speed while maintaining quality. Provide concise but comprehensive analysis."
-            ),
-            expected_output="Efficient visual analysis for each screenshot with timestamps, focusing on key concepts and educational content.",
-            agent=content_analyzer,
-            context=[extract_task]
+
+    @task
+    def analysis_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['analysis_task'],
+            agent=self.content_analyzer(),
+            context=[self.extract_task()]
         )
-        
-        synthesis_task = Task(
-            description=(
-                "SPEED-OPTIMIZED SYNTHESIS: Rapidly create a comprehensive study guide using analysis and transcript data. "
-                "Work efficiently to: "
-                "1. Quickly read transcript file (if available) using FileReadTool. "
-                "2. Efficiently match visual analysis with transcript content by timestamp. "
-                "3. Create structured, informative notes combining visual and audio information. "
-                "4. Extract key concepts and main points without excessive elaboration. "
-                "5. Use clear headings, bullet points, and organized structure. "
-                "6. Include relevant transcript quotes when they add educational value. "
-                "7. Focus on learning objectives and practical study value. "
-                "8. Maintain quality while prioritizing speed and efficiency. "
-                "Generate a professional study guide optimized for both speed and educational value."
-            ),
-            expected_output="A well-structured study guide in Markdown format efficiently combining visual and audio information with key concepts and learning materials.",
-            agent=note_synthesizer,
-            context=[extract_task, analysis_task],
+
+    @task
+    def synthesis_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['synthesis_task'],
+            agent=self.note_synthesizer(),
+            context=[self.extract_task(), self.analysis_task()],
             output_file='final_study_guide.md'
         )
-        
-        # Create and return crew
+
+    @crew
+    def crew(self) -> Crew:
+        """Creates the CrewaiVideoStudyGuide crew"""
         return Crew(
-            agents=[video_engineer, content_analyzer, note_synthesizer],
-            tasks=[extract_task, analysis_task, synthesis_task],
+            agents=self.agents,
+            tasks=self.tasks,
             process=Process.sequential,
             verbose=False,
             full_output=True,
