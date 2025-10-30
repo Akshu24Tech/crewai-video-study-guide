@@ -17,5 +17,5 @@ COPY . .
 # Set environment variables
 ENV PYTHONPATH=/app
 
-# Run the crew
-CMD ["python", "src/crew.py"]
+# Run the simple crew
+CMD ["python", "crew.py"]

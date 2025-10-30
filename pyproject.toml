@@ -1,19 +1,19 @@
-[tool.poetry]
+[project]
 name = "crewai-video-study-guide"
 version = "0.1.0"
 description = "AI-powered video study guide generator using CrewAI"
-authors = ["akshug2004 <akshug2004@example.com>"]
+authors = [{name = "akshug2004", email = "akshug2004@example.com"}]
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.10"
-crewai = "^0.55.2"
-crewai-tools = "^0.8.3"
-python-dotenv = "^1.0.0"
-opencv-python-headless = "^4.8.1"
-youtube-transcript-api = "^0.6.2"
-yt-dlp = "^2023.12.30"
+requires-python = ">=3.10"
+dependencies = [
+    "crewai>=0.55.2",
+    "crewai-tools>=0.8.3",
+    "python-dotenv>=1.0.0",
+    "opencv-python-headless>=4.8.1",
+    "youtube-transcript-api>=0.6.2",
+    "yt-dlp>=2023.12.30"
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
