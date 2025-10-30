@@ -1,69 +1,14 @@
 #!/usr/bin/env python
 import sys
 import warnings
-
-import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-try:
-    from crewai_video_study_guide.crew import CrewaiVideoStudyGuideCrew
-except ImportError:
-    # Fallback to simple version if decorators don't work
-    from crewai_video_study_guide.crew_simple import CrewaiVideoStudyGuideCrew
+# Add the current directory to Python path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from crewai_video_study_guide.main import run
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
-
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
-
-def run():
-    """
-    Run the crew.
-    """
-    inputs = {
-        'youtube_url': 'https://youtu.be/kNcPTdiDwkI'
-    }
-    CrewaiVideoStudyGuideCrew().crew().kickoff(inputs=inputs)
-
-
-def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        'youtube_url': 'https://youtu.be/kNcPTdiDwkI'
-    }
-    try:
-        CrewaiVideoStudyGuideCrew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
-
-def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
-    try:
-        CrewaiVideoStudyGuideCrew().crew().replay(task_id=sys.argv[1])
-
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
-
-def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        'youtube_url': 'https://youtu.be/kNcPTdiDwkI'
-    }
-    try:
-        CrewaiVideoStudyGuideCrew().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
 
 if __name__ == "__main__":
     run()
