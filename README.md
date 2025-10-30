@@ -72,7 +72,11 @@ pip install yt-dlp
 
 ### 5. Run the Generator
 ```bash
-python main_crew.py
+# Using the new CrewAI structure
+python src/crew.py
+
+# Or using the original script (still works)
+python main.py
 ```
 
 ## 📊 Performance Comparison
@@ -125,11 +129,19 @@ MAX_EXECUTION_TIME = 180
 
 ```
 crewai-video-study-guide/
-├── main_crew.py                # 🌟 Main script
+├── src/
+│   ├── crew.py                 # 🌟 New CrewAI entry point
+│   └── crewai_video_study_guide/
+│       ├── crew.py             # Main crew definition
+│       ├── config/
+│       │   ├── agents.yaml     # Agent configurations
+│       │   └── tasks.yaml      # Task definitions
+│       └── tools/
+│           └── video_tools.py  # Video processing tools
+├── main.py                     # 🌟 Original script (still works)
 ├── config.py                   # Configuration settings
-├── video_tools.py              # Video processing functions
-├── gemini_tools.py             # Gemini AI integration
-
+├── video_tools.py              # Original video tools
+├── pyproject.toml              # Poetry/pip configuration
 ├── requirements.txt            # Dependencies
 ├── .env.example               # Environment variables template
 └── README.md                  # This file
