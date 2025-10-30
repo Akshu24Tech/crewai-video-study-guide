@@ -2,7 +2,15 @@
 import sys
 import warnings
 
-from crewai_video_study_guide.crew import CrewaiVideoStudyGuideCrew
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+try:
+    from crewai_video_study_guide.crew import CrewaiVideoStudyGuideCrew
+except ImportError:
+    # Fallback to simple version if decorators don't work
+    from crewai_video_study_guide.crew_simple import CrewaiVideoStudyGuideCrew
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 

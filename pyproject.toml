@@ -2,17 +2,18 @@
 name = "crewai-video-study-guide"
 version = "0.1.0"
 description = "AI-powered video study guide generator using CrewAI"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["akshug2004 <akshug2004@example.com>"]
 readme = "README.md"
+packages = [{include = "crewai_video_study_guide", from = "src"}]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<=3.13"
-crewai = {extras = ["tools"], version = "^0.70.1"}
-crewai-tools = "^0.12.1"
-python-dotenv = "^1.0.0"
-opencv-python = "^4.8.1.78"
-youtube-transcript-api = "^0.6.2"
-yt-dlp = "^2023.12.30"
+crewai = {extras = ["tools"], version = ">=0.55.2"}
+crewai-tools = ">=0.8.3"
+python-dotenv = ">=1.0.0"
+opencv-python-headless = ">=4.8.1.78"
+youtube-transcript-api = ">=0.6.2"
+yt-dlp = ">=2023.12.30"
 
 [build-system]
 requires = ["poetry-core"]

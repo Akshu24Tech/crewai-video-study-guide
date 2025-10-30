@@ -1,6 +1,6 @@
-crewai[tools]>=0.70.1
-crewai-tools>=0.12.1
+crewai[tools]>=0.55.2
+crewai-tools>=0.8.3
 python-dotenv>=1.0.0
-opencv-python>=4.8.1.78
+opencv-python-headless>=4.8.1.78
 youtube-transcript-api>=0.6.2
 yt-dlp>=2023.12.30
