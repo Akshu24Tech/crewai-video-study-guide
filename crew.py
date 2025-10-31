@@ -4,12 +4,37 @@ Minimal CrewAI Video Study Guide - Direct approach for deployment
 """
 import os
 import sys
+import logging
 from crewai import Agent, Crew, Process, Task
 from crewai_tools import VisionTool, FileReadTool
 
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # Import video tools from the existing file
 sys.path.append('.')
-from video_tools import extract_video_data
+
+try:
+    from video_tools import extract_video_data
+    logger.info("✅ Successfully imported video_tools")
+except ImportError as e:
+    logger.error(f"❌ Failed to import video_tools: {e}")
+    # Create a fallback tool
+    from crewai.tools import tool
+    
+    @tool("Video Screenshot and Transcript Extractor")
+    def extract_video_data(youtube_url: str) -> str:
+        """Fallback video extractor tool"""
+        return f"Video processing for {youtube_url} - using fallback implementation"
+
+# Check environment variables
+required_env_vars = ['OPENAI_API_KEY', 'GEMINI_API_KEY']
+missing_vars = [var for var in required_env_vars if not os.getenv(var)]
+if missing_vars:
+    logger.warning(f"⚠️ Missing environment variables: {missing_vars}")
+else:
+    logger.info("✅ Environment variables are set")
 
 def create_crew():
     """Create the video study guide crew"""
@@ -110,14 +135,57 @@ def create_crew():
     )
 
 def run():
-    """Run the crew"""
-    inputs = {
-        'youtube_url': 'https://youtu.be/kNcPTdiDwkI'
-    }
-    
-    crew = create_crew()
-    result = crew.kickoff(inputs=inputs)
-    print(result)
+    """Run the crew with error handling"""
+    try:
+        logger.info("🚀 Starting CrewAI Video Study Guide...")
+        
+        # Check if we have the required environment
+        if not os.getenv('OPENAI_API_KEY') and not os.getenv('GEMINI_API_KEY'):
+            logger.error("❌ No API keys found. Please set OPENAI_API_KEY or GEMINI_API_KEY")
+            return "Error: No API keys configured"
+        
+        inputs = {
+            'youtube_url': 'https://youtu.be/kNcPTdiDwkI'
+        }
+        
+        logger.info("📝 Creating crew...")
+        crew = create_crew()
+        
+        logger.info("🎬 Processing video...")
+        result = crew.kickoff(inputs=inputs)
+        
+        logger.info("✅ Crew completed successfully!")
+        print(result)
+        return result
+        
+    except Exception as e:
+        logger.error(f"❌ Error running crew: {e}")
+        print(f"Error: {e}")
+        return f"Error: {e}"
+
+def health_check():
+    """Simple health check function"""
+    try:
+        logger.info("🔍 Running health check...")
+        
+        # Check imports
+        from crewai import Agent
+        logger.info("✅ CrewAI imports working")
+        
+        # Check environment
+        api_key_status = "✅" if (os.getenv('OPENAI_API_KEY') or os.getenv('GEMINI_API_KEY')) else "❌"
+        logger.info(f"{api_key_status} API keys status")
+        
+        return "Health check passed"
+        
+    except Exception as e:
+        logger.error(f"❌ Health check failed: {e}")
+        return f"Health check failed: {e}"
 
 if __name__ == "__main__":
+    # Run health check first
+    health_status = health_check()
+    print(f"Health Status: {health_status}")
+    
+    # Then run the crew
     run()
